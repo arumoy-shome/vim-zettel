@@ -25,3 +25,9 @@ endfunction
 
 call s:define_commands()
 call s:define_bindings()
+
+augroup VimZettel
+  autocmd!
+  "TODO: how to make this dynamic?
+  autocmd BufNewFile,BufRead $HOME/zettel/*.md execute "lcd" . g:zettel_dir
+augroup END
