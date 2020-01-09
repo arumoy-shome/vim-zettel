@@ -23,6 +23,10 @@ function! s:new_note_id(title) abort
     return strftime("%Y%m%d%H%M%S")
 endfunction
 
+function! s:insert_title() abort
+  call append(0, "# " . expand("%:t:r"))
+endfunction
+
 function! zettel#new_note(split, title) abort
   if isdirectory(g:zettel_dir)
     let l:note_name = g:zettel_dir . "/" . s:new_note_id(a:title) . ".md"
@@ -41,6 +45,8 @@ function! zettel#new_note(split, title) abort
       call zettel#new_note(a:split, a:title)
     endif
   endif
+
+  call s:insert_title()
 endfunction
 
 function! s:populate_qf(list) abort
