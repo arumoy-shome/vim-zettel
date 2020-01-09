@@ -12,6 +12,16 @@ function! s:define_commands() abort
   command -nargs=? SZet :call zettel#new_note("h", <q-args>)
   command -nargs=? VZet :call zettel#new_note("v", <q-args>)
   command -nargs=? TZet :call zettel#new_note("t", <q-args>)
+  if exists(":CommandT")
+    command CommandTZettel :CommandT ~/zettel
+  endif
+endfunction
+
+function! s:define_bindings() abort
+  if exists(":CommandTZettel")
+    nmap <silent> <C-n> :CommandTZettel<CR>
+  endif
 endfunction
 
 call s:define_commands()
+call s:define_bindings()
