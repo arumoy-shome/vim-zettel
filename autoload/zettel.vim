@@ -29,13 +29,12 @@ function! zettel#new_note(split, title) abort
 
     if a:split == "h"
       execute "split " . l:note_name
-      execute "lcd" . s:notes_dir
+    elseif a:split == "v"
+      execute "vsplit" . l:note_name
     elseif a:split == "t"
       execute "tabedit" . l:note_name
-      execute "lcd" . s:notes_dir
     else
-      execute "vsplit" . l:note_name
-      execute "lcd" . s:notes_dir
+      execute "edit" . l:note_name
     endif
   else
     if s:create_notes_dir()
