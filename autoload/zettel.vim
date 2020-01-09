@@ -1,8 +1,8 @@
 function! s:create_notes_dir() abort
-  let l:choice = confirm("Create notes directory " . s:notes_dir . " ?", "&Yes\n&No")
+  let l:choice = confirm("Create notes directory " . g:zettel_dir . " ?", "&Yes\n&No")
 
   if choice == 1
-    call mkdir(s:notes_dir, "p")
+    call mkdir(g:zettel_dir, "p")
     echomsg "Notes directory successfully created."
     return 1
   endif
@@ -24,8 +24,8 @@ function! s:new_note_id(title) abort
 endfunction
 
 function! zettel#new_note(split, title) abort
-  if isdirectory(s:notes_dir)
-    let l:note_name = s:notes_dir . "/" . s:new_note_id(a:title) . ".md"
+  if isdirectory(g:zettel_dir)
+    let l:note_name = g:zettel_dir . "/" . s:new_note_id(a:title) . ".md"
 
     if a:split == "h"
       execute "split " . l:note_name
@@ -63,7 +63,7 @@ function! zettel#ls(scope, note) abort
   if a:scope == 'all'
     let l:notes = s:notes
   elseif a:scope == 'main'
-    let l:notes = split(globpath(s:notes_dir, '????????????00.md'), "\n")
+    let l:notes = split(globpath(g:zettel_dir, '????????????00.md'), "\n")
   elseif a:scope == 'sub'
     if !len(a:note)
       echomsg "Parent note required!"
@@ -72,7 +72,7 @@ function! zettel#ls(scope, note) abort
 
     let l:note_id = matchstr(a:note, s:note_id_pattern)
     let l:node_id = l:note_id[0:11]
-    let l:notes = split(globpath(s:notes_dir, l:node_id . '??.md'), "\n")
+    let l:notes = split(globpath(g:zettel_dir, l:node_id . '??.md'), "\n")
   else
     let l:notes = []
   endif
