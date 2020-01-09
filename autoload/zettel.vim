@@ -1,15 +1,3 @@
-let s:cwd = getcwd()
-let s:home = expand("$HOME")
-let s:notes_dir = s:home . "/zettel"
-let s:note_id_pattern = '\v\zs\d+\ze\.md$'
-
-if isdirectory(s:notes_dir)
-  " TODO: this can be expensive when we have a lot of notes
-  let s:notes = split(globpath(s:notes_dir, "*.md"), "\n")
-else
-  let s:notes = []
-endif
-
 function! s:create_notes_dir() abort
   let l:choice = confirm("Create notes directory " . s:notes_dir . " ?", "&Yes\n&No")
 
