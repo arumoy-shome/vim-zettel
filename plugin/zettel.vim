@@ -28,6 +28,8 @@ call s:define_bindings()
 
 augroup VimZettel
   autocmd!
-  "TODO: how to make this dynamic?
-  autocmd BufNewFile,BufRead $HOME/zettel/*.md execute "lcd" . g:zettel_dir
+  " note that autocmds do not allow for dynamic {pat} so this autocmd needs to
+  " be overridden in user config.
+  autocmd BufWinEnter $HOME/zettel/*.md execute "lcd" . g:zettel_dir
+  autocmd BufWinLeave $HOME/zettel/*.md execute "lcd -"
 augroup END
