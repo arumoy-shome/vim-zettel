@@ -28,8 +28,12 @@ call s:define_bindings()
 
 augroup VimZettel
   autocmd!
-  " note that autocmds do not allow for dynamic {pat} so this autocmd needs to
+  " NOTE: that autocmds do not allow for dynamic {pat} so this autocmd needs to
   " be overridden in user config.
-  autocmd BufWinEnter $HOME/zettel/*.md execute "lcd" . g:zettel_dir
-  autocmd BufWinLeave $HOME/zettel/*.md execute "lcd -"
+  " BUG: original pwd not preserved if multiple note windows are opened first
+  " thing after starting vim.
+  autocmd BufWinEnter $HOME/zettel/*.md if getcwd() !~ g:zettel_dir |
+        \ execute "lcd" . g:zettel_dir | endif
+  autocmd BufWinLeave $HOME/zettel/*.md if getcwd() !~ g:zettel_dir |
+        \ execute "lcd -" | endif
 augroup END
