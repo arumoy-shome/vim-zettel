@@ -23,17 +23,17 @@ function! s:define_bindings() abort
   endif
 endfunction
 
-call s:define_commands()
-call s:define_bindings()
-
 augroup VimZettel
   autocmd!
   " NOTE: that autocmds do not allow for dynamic {pat} so this autocmd needs to
   " be overridden in user config.
-  " BUG: original pwd not preserved if multiple note windows are opened first
+  " GOTCHA: original pwd not preserved if multiple note windows are opened first
   " thing after starting vim.
   autocmd BufWinEnter $HOME/zettel/*.md if getcwd() !~ g:zettel_dir |
         \ execute "lcd" . g:zettel_dir | endif
   autocmd BufWinLeave $HOME/zettel/*.md if getcwd() !~ g:zettel_dir |
         \ execute "lcd -" | endif
 augroup END
+
+call s:define_commands()
+call s:define_bindings()
